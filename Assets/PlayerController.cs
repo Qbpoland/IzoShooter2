@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public GameObject hpBar;
     Scrollbar hpScrollBar;
     public float healingAmount = 2;
+    NavMeshAgent agent;
 
     void Start()
     {
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
         currentHp = maxHp;
         hpScrollBar = hpBar.GetComponent<Scrollbar>();
         hpScrollBar.size = currentHp / maxHp;
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -32,7 +36,15 @@ public class PlayerController : MonoBehaviour
         //obrót wokó³ osi Y o iloœæ stopni równ¹ wartoœci osi X kontrolera
         transform.Rotate(Vector3.up * movementVector.x);
         //przesuniêcie do przodu (transform.forward) o wychylenie osi Y kontrolera w czasie jednej klatki
-        transform.Translate(Vector3.forward * movementVector.y * Time.deltaTime * playerSpeed);
+        //transform.Translate(Vector3.forward * movementVector.y * Time.deltaTime * playerSpeed);
+       if(movementVector.y > 0)
+        {
+            agent.destination = transform.position + transform.forward;
+        }
+       if (movementVector.y == 0)
+        {
+            agent.isStopped = true;
+        }
     }
 
     void OnMove(InputValue inputValue)
