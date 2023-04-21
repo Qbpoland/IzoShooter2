@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         //transform.Translate(Vector3.forward * movementVector.y * Time.deltaTime * playerSpeed);
        if(movementVector.y > 0)
         {
+            agent.isStopped = false;
             agent.destination = transform.position + transform.forward;
         }
        if (movementVector.y == 0)

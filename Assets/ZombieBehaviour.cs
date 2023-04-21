@@ -18,15 +18,38 @@ public class ZombieBehaviour : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if(hp> 0)
-        {
-            //transform.LookAt(player.transform.position);
-            //Vector3 playerDirection = transform.position - player.transform.position;
 
-            //transform.Translate(Vector3.forward * Time.deltaTime);
+    {
+        var seesPlayer = false;
+        var hearsPlayer = false;
+        var playerVector = player.transform.position - transform.position;
+
+        Debug.DrawRay(transform.position, playerVector, Color.yellow);
+        Physics.Raycast(transform.position, playerVector, out var hit);
+
+        if (hit.collider.gameObject.CompareTag("Player"))
+        {
+            seesPlayer = true;
+        }
+
+        Collider[] nerby = Physics.OverlapSphere(transform.position, 5f);
+        foreach(Collider collider in nerby)
+        {
+            if (collider.transform.CompareTag("Player"))
+            {
+                //g³os gracza s³uch 
+                hearsPlayer = true;
+            }
+          
+        }
+        if (seesPlayer || hearsPlayer)
+        {
             agent.destination = player.transform.position;
         }
+
+
+
+    
         
     }
     //private void OnCollisionEnter(Collision collision)
