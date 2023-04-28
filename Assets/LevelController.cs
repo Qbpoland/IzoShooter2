@@ -7,7 +7,7 @@ public class LevelController : MonoBehaviour
 
 {
     
-    private int maxZombies = 3;
+    private int maxZombies = 9;
     public GameObject ZombiePrefab;
     // Start is called before the first frame update
     void Start()

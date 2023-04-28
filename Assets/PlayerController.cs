@@ -60,9 +60,9 @@ public class PlayerController : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed, ForceMode.VelocityChange);
         Destroy(bullet, 5);
     }
-
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider collision)
     {
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             currentHp--;
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Heal"))
         {
-            currentHp += healingAmount; 
+            currentHp += healingAmount;
             hpScrollBar.size = currentHp / maxHp;
             Destroy(collision.gameObject);
         }
